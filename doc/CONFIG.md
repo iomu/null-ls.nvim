@@ -63,6 +63,7 @@ local defaults = {
     root_dir = require("null-ls.utils").root_pattern(".null-ls-root", "Makefile", ".git"),
     sources = nil,
     temp_dir = nil,
+    generate_temp_filename = nil,
     update_in_insert = false,
 }
 ```
@@ -235,6 +236,15 @@ change this setting.
 project for context and so will not work if this option changes.
 
 You can also configure `temp_dir` per built-in by using the `with` method,
+described in [BUILTIN_CONFIG](BUILTIN_CONFIG.md).
+
+### generate_temp_filename (function, optional)
+
+A function that generates the filename of temporary files based on the filename
+of the original file. This is useful for sources that don't work with the default
+temporary file names (`.null-ls_${RANDOM}_${FILENAME}`).
+
+You can also configure `generate_temp_filename` per built-in by using the `with` method,
 described in [BUILTIN_CONFIG](BUILTIN_CONFIG.md).
 
 ### update_in_insert (boolean)

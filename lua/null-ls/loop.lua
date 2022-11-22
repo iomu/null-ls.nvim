@@ -225,11 +225,11 @@ end
 ---@param bufname string
 ---@param dirname string|nil
 ---@return string temp_path, fun() cleanup
-M.temp_file = function(content, bufname, dirname)
+M.temp_file = function(content, bufname, dirname, generate_filename)
     dirname = dirname or vim.fn.fnamemodify(bufname, ":h")
     local base_name = vim.fn.fnamemodify(bufname, ":t")
 
-    local filename = string.format(".null-ls_%d_%s", math.random(100000, 999999), base_name)
+    local filename = generate_filename and generate_filename(base_name) or string.format(".null-ls_%d_%s", math.random(100000, 999999), base_name)
     local temp_path = u.path.join(dirname, filename)
 
     local fd, err = uv.fs_open(temp_path, "w", 384)

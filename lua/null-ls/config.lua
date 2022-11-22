@@ -30,6 +30,7 @@ local type_overrides = {
     should_attach = { "function", "nil" },
     sources = { "table", "nil" },
     temp_dir = { "string", "nil" },
+    generate_temp_filename = { "function", "nil" },
 }
 
 local wanted_type = function(k)

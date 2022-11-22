@@ -101,7 +101,7 @@ local line_output_wrapper = function(params, done, on_output)
 end
 
 return function(opts)
-    local command, args, env, on_output, format, ignore_stderr, from_stderr, to_stdin, check_exit_code, timeout, to_temp_file, from_temp_file, use_cache, runtime_condition, cwd, dynamic_command, multiple_files, temp_dir =
+    local command, args, env, on_output, format, ignore_stderr, from_stderr, to_stdin, check_exit_code, timeout, to_temp_file, from_temp_file, use_cache, runtime_condition, cwd, dynamic_command, multiple_files, temp_dir, generate_temp_filename =
         opts.command,
         opts.args,
         opts.env,
@@ -119,7 +119,8 @@ return function(opts)
         opts.cwd,
         opts.dynamic_command,
         opts.multiple_files,
-        opts.temp_dir
+        opts.temp_dir,
+        opts.generate_temp_file_name
 
     if type(check_exit_code) == "table" then
         local codes = check_exit_code
@@ -298,7 +299,7 @@ return function(opts)
 
             if to_temp_file then
                 local content = get_content(params)
-                local temp_path, cleanup = loop.temp_file(content, params.bufname, temp_dir or c.get().temp_dir)
+                local temp_path, cleanup = loop.temp_file(content, params.bufname, temp_dir or c.get().temp_dir, generate_temp_filename or c.get().generate_temp_filename)
 
                 spawn_opts.on_stdout_end = function()
                     if from_temp_file then
